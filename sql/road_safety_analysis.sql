@@ -1,10 +1,6 @@
 -- Road Safety Events Data Analysis
 -- This file contains SQL queries for analyzing the road_safety_events table
 
--- ============================================================================
--- OVERVIEW QUERIES
--- ============================================================================
-
 -- Total number of events
 SELECT COUNT(*) AS total_events
 FROM road_safety_events;
@@ -17,10 +13,6 @@ SELECT
 FROM road_safety_events
 WHERE occurrence_date IS NOT NULL;
 
--- ============================================================================
--- EVENTS BY MUNICIPALITY
--- ============================================================================
-
 -- Events by municipality with percentages
 SELECT
     municipality,
@@ -30,10 +22,6 @@ FROM road_safety_events
 WHERE municipality IS NOT NULL
 GROUP BY municipality
 ORDER BY event_count DESC;
-
--- ============================================================================
--- EVENTS BY TYPE
--- ============================================================================
 
 -- Events by road safety occurrence type
 SELECT
@@ -45,10 +33,6 @@ WHERE road_safety_occurrence_type IS NOT NULL
 GROUP BY road_safety_occurrence_type
 ORDER BY event_count DESC;
 
--- ============================================================================
--- EVENTS BY LOCATION CODE
--- ============================================================================
-
 -- Events by location code
 SELECT
     location_code,
@@ -59,10 +43,6 @@ WHERE location_code IS NOT NULL
 GROUP BY location_code
 ORDER BY event_count DESC;
 
--- ============================================================================
--- DRUG/ALCOHOL INVOLVEMENT
--- ============================================================================
-
 -- Events involving drugs/alcohol
 SELECT
     involve_drug_or_alcohol,
@@ -72,10 +52,6 @@ FROM road_safety_events
 WHERE involve_drug_or_alcohol IS NOT NULL
 GROUP BY involve_drug_or_alcohol
 ORDER BY event_count DESC;
-
--- ============================================================================
--- TEMPORAL ANALYSIS
--- ============================================================================
 
 -- Events by date (daily aggregation)
 SELECT
@@ -113,10 +89,6 @@ WHERE occurrence_date IS NOT NULL
 GROUP BY EXTRACT(DOW FROM occurrence_date)
 ORDER BY day_of_week;
 
--- ============================================================================
--- COMBINED ANALYSIS
--- ============================================================================
-
 -- Events by type and municipality (top combinations)
 SELECT
     municipality,
@@ -141,41 +113,6 @@ GROUP BY road_safety_occurrence_type, involve_drug_or_alcohol
 ORDER BY road_safety_occurrence_type, event_count DESC;
 
 -- ============================================================================
--- GEOGRAPHIC ANALYSIS
--- ============================================================================
-
--- Events with valid coordinates (for mapping)
-SELECT
-    unique_identifier,
-    municipality,
-    road_safety_occurrence_type,
-    x AS longitude,
-    y AS latitude,
-    occurrence_date
-FROM road_safety_events
-WHERE x IS NOT NULL 
-    AND y IS NOT NULL
-    AND x != 0 
-    AND y != 0;
-
--- Event density by municipality (using coordinate bounds)
-SELECT
-    municipality,
-    COUNT(*) AS event_count,
-    AVG(x) AS avg_longitude,
-    AVG(y) AS avg_latitude,
-    MIN(x) AS min_longitude,
-    MAX(x) AS max_longitude,
-    MIN(y) AS min_latitude,
-    MAX(y) AS max_latitude
-FROM road_safety_events
-WHERE municipality IS NOT NULL
-    AND x IS NOT NULL
-    AND y IS NOT NULL
-GROUP BY municipality
-ORDER BY event_count DESC;
-
--- ============================================================================
 -- DATA QUALITY CHECKS
 -- ============================================================================
 
@@ -189,10 +126,6 @@ SELECT
     COUNT(y) AS rows_with_y,
     COUNT(time_est) AS rows_with_time
 FROM road_safety_events;
-
--- ============================================================================
--- RECENT EVENTS
--- ============================================================================
 
 -- Most recent events
 SELECT
