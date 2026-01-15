@@ -272,14 +272,6 @@ Managed via Docker image: `apache/airflow:3.1.0`
 - Additional providers for PostgreSQL, HTTP requests
 - Installed automatically in the Docker container
 
-## 🔐 Security Notes
-
-- **Never commit credentials** to version control
-- Use environment variables for sensitive information
-- The `.env` file is gitignored
-- Database connection strings contain passwords - handle with care
-- For production, use secure secret management systems
-
 ## 📈 Data Sources
 
 - **ArcGIS REST API**: Road Safety Feature Service
@@ -293,16 +285,8 @@ Managed via Docker image: `apache/airflow:3.1.0`
 3. Test thoroughly
 4. Submit a pull request
 
-## 📄 License
-
-[Specify your license here]
 
 ## 👤 Author
 
-[Your name/team]
+Jeffrey Zhao
 
-## 🙏 Acknowledgments
-
-- Apache Airflow community
-- Supabase for database hosting
-- Streamlit for visualization framework
