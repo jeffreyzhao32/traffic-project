@@ -96,3 +96,5 @@ secrets/
 *.pem
 *.key
 *.cert
+
+config/airflow.cfg
